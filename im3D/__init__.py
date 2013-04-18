@@ -12,3 +12,4 @@ include histograms and interfacial shape distributions (ISD)
 import histogram
 import metrics
 import transform
+import smoothing
