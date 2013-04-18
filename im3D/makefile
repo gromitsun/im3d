@@ -5,6 +5,7 @@ INSTALL = ../bin
 HIST_SRC = histogram/pyx_src
 METRICS_SRC = metrics/pyx_src
 TRANSFORM_SRC = transform/pyx_src
+SMOOTHING_SRC = smoothing/pyx_src
 
 # Python, Cython and C compiler executables:
 PY = /opt/local/bin/py27-MacPorts
@@ -25,7 +26,9 @@ HIST_SO = histogram_1D.so histogram_2D.so
 METRICS_SO = metrics_rms.so metrics_sv.so metrics_delta.so
 TRANSFORM_SO = translate.so translate_2D.so translate_3D.so \
                rotate.so rotate_2D.so rotate_3D.so
-SO_FILES = $(HIST_SO) $(METRICS_SO) $(TRANSFORM_SO)
+SMOOTHING_SO = DS_1D.so  DS_2D.so  DS_3D.so DS_4D.so  \
+               MMC_2D.so  MMC_3D.so
+SO_FILES = $(HIST_SO) $(METRICS_SO) $(TRANSFORM_SO) $(SMOOTHING_SO)
 
 
 ############## Default make case ###############
@@ -172,6 +175,85 @@ rotate_3D.so: $(BUILD)/rotate_3D.o
 
 
 ################################################################
+############            SMOOTHING MODULE            ############
+################################################################
+smoothing: $(SMOOTHING_SO)
+
+
+#################### DS_1D ####################
+### Cython:
+$(BUILD)/DS_1D.c: $(SMOOTHING_SRC)/DS_1D.pyx | $(BUILD)
+	$(CY) -a $(SMOOTHING_SRC)/DS_1D.pyx -o $(BUILD)/DS_1D.c
+### Compile:
+$(BUILD)/DS_1D.o: $(BUILD)/DS_1D.c
+	$(CC) $(INC_DIRS) $(CC_OPT) -c $(BUILD)/DS_1D.c -o $(BUILD)/DS_1D.o
+### Link:
+DS_1D.so: $(BUILD)/DS_1D.o
+	$(CC) $(LINK_DIRS) $(LINK_LIBS) $(LINK_OPTS) build/DS_1D.o -o DS_1D.so
+
+
+#################### DS_2D ####################
+### Cython:
+$(BUILD)/DS_2D.c: $(SMOOTHING_SRC)/DS_2D.pyx | $(BUILD)
+	$(CY) -a $(SMOOTHING_SRC)/DS_2D.pyx -o $(BUILD)/DS_2D.c
+### Compile:
+$(BUILD)/DS_2D.o: $(BUILD)/DS_2D.c
+	$(CC) $(INC_DIRS) $(CC_OPT) -c $(BUILD)/DS_2D.c -o $(BUILD)/DS_2D.o
+### Link:
+DS_2D.so: $(BUILD)/DS_2D.o
+	$(CC) $(LINK_DIRS) $(LINK_LIBS) $(LINK_OPTS) build/DS_2D.o -o DS_2D.so
+
+
+#################### DS_3D ####################
+### Cython:
+$(BUILD)/DS_3D.c: $(SMOOTHING_SRC)/DS_3D.pyx | $(BUILD)
+	$(CY) -a $(SMOOTHING_SRC)/DS_3D.pyx -o $(BUILD)/DS_3D.c
+### Compile:
+$(BUILD)/DS_3D.o: $(BUILD)/DS_3D.c
+	$(CC) $(INC_DIRS) $(CC_OPT) -c $(BUILD)/DS_3D.c -o $(BUILD)/DS_3D.o
+### Link:
+DS_3D.so: $(BUILD)/DS_3D.o
+	$(CC) $(LINK_DIRS) $(LINK_LIBS) $(LINK_OPTS) build/DS_3D.o -o DS_3D.so
+
+
+#################### DS_4D ####################
+### Cython:
+$(BUILD)/DS_4D.c: $(SMOOTHING_SRC)/DS_4D.pyx | $(BUILD)
+	$(CY) -a $(SMOOTHING_SRC)/DS_4D.pyx -o $(BUILD)/DS_4D.c
+### Compile:
+$(BUILD)/DS_4D.o: $(BUILD)/DS_4D.c
+	$(CC) $(INC_DIRS) $(CC_OPT) -c $(BUILD)/DS_4D.c -o $(BUILD)/DS_4D.o
+### Link:
+DS_4D.so: $(BUILD)/DS_4D.o
+	$(CC) $(LINK_DIRS) $(LINK_LIBS) $(LINK_OPTS) build/DS_4D.o -o DS_4D.so
+
+
+#################### MMC_2D ####################
+### Cython:
+$(BUILD)/MMC_2D.c: $(SMOOTHING_SRC)/MMC_2D.pyx | $(BUILD)
+	$(CY) -a $(SMOOTHING_SRC)/MMC_2D.pyx -o $(BUILD)/MMC_2D.c
+### Compile:
+$(BUILD)/MMC_2D.o: $(BUILD)/MMC_2D.c
+	$(CC) $(INC_DIRS) $(CC_OPT) -c $(BUILD)/MMC_2D.c -o $(BUILD)/MMC_2D.o
+### Link:
+MMC_2D.so: $(BUILD)/MMC_2D.o
+	$(CC) $(LINK_DIRS) $(LINK_LIBS) $(LINK_OPTS) build/MMC_2D.o -o MMC_2D.so
+
+
+#################### MMC_3D ####################
+### Cython:
+$(BUILD)/MMC_3D.c: $(SMOOTHING_SRC)/MMC_3D.pyx | $(BUILD)
+	$(CY) -a $(SMOOTHING_SRC)/MMC_3D.pyx -o $(BUILD)/MMC_3D.c
+### Compile:
+$(BUILD)/MMC_3D.o: $(BUILD)/MMC_3D.c
+	$(CC) $(INC_DIRS) $(CC_OPT) -c $(BUILD)/MMC_3D.c -o $(BUILD)/MMC_3D.o
+### Link:
+MMC_3D.so: $(BUILD)/MMC_3D.o
+	$(CC) $(LINK_DIRS) $(LINK_LIBS) $(LINK_OPTS) build/MMC_3D.o -o MMC_3D.so
+
+
+
+################################################################
 ############             MISC UTILITIES             ############
 ################################################################
 # Build dir:
@@ -179,10 +261,11 @@ $(BUILD):
 	mkdir -p $(BUILD)
 
 
-install: $(HIST_SO) $(METRICS_SO) $(TRANSFORM_SO)
+install: $(HIST_SO) $(METRICS_SO) $(TRANSFORM_SO) $(SMOOTHING_SO) | $(INSTALL)
 	mv $(HIST_SO) $(INSTALL)
 	mv $(METRICS_SO) $(INSTALL)
 	mv $(TRANSFORM_SO) $(INSTALL)
+	mv $(SMOOTHING_SO) $(INSTALL)
 #	for FILENAME in $(SO_FILES); do \
 #		mv $$FILENAME $(INSTALL) ; \
 #	done
