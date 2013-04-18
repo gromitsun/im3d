@@ -261,6 +261,11 @@ $(BUILD):
 	mkdir -p $(BUILD)
 
 
+# Install dir:
+$(INSTALL):
+	mkdir -p $(INSTALL)
+
+
 install: $(HIST_SO) $(METRICS_SO) $(TRANSFORM_SO) $(SMOOTHING_SO) | $(INSTALL)
 	mv $(HIST_SO) $(INSTALL)
 	mv $(METRICS_SO) $(INSTALL)
