@@ -13,4 +13,5 @@ import curvature
 import histogram
 import metrics
 import transform
+import shapes
 import smoothing
