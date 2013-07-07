@@ -11,6 +11,7 @@ include histograms and interfacial shape distributions (ISD)
 
 import curvature
 import histogram
+import io
 import metrics
 import transform
 import sdf
