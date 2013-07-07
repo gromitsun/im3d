@@ -46,7 +46,11 @@ setup(
     version='0.1.0',
     author='John Gibbs',
     author_email='jwgibbs@u.northwestern.edu',
-    packages=['im3D', 'im3D.histogram', 'im3D.metrics', 'im3D.smoothing'], #
+    packages=['im3D', 
+              'im3D.curvature', 
+              'im3D.histogram', 
+              'im3D.metrics', 
+              'im3D.smoothing'],
     url=None,
     license='LICENSE.txt',
     description='3D image processing and visualization',

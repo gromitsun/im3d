@@ -9,6 +9,7 @@ It also contains tools for visualizing data.  Examples of this
 include histograms and interfacial shape distributions (ISD)
 """
 
+import curvature
 import histogram
 import metrics
 import transform
