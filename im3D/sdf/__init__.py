@@ -1,4 +1,4 @@
-import test
+# import im3D.sdf.test as test
 
 def reinit(phi, dt=0.25, tol=0.25, band=5.0, verbose=1, 
            max_it=-1, use_weno=False):
