@@ -50,6 +50,7 @@ setup(
               'im3D.curvature', 
               'im3D.histogram', 
               'im3D.metrics', 
+              'im3D.sdf', 
               'im3D.shapes', 
               'im3D.smoothing'],
     url=None,

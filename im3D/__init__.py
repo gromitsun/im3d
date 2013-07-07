@@ -13,5 +13,6 @@ import curvature
 import histogram
 import metrics
 import transform
+import sdf
 import shapes
 import smoothing
