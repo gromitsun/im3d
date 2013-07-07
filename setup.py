@@ -1,43 +1,56 @@
-#!/opt/local/bin py27-MacPorts
+import sys, os, stat, commands
 from distutils.core import setup
-import glob
+from distutils.extension import Extension
+# Check for Cython
+try:
+    from Cython.Distutils import build_ext
+    import Cython.Compiler.Options
+    Cython.Compiler.Options.annotate = True
+except:
+    print('Cython is required for this install')
+    sys.exit(1)
+
 # ==============================================================
-# from distutils.extension import Extension
-# from Cython.Distutils import build_ext
-# 
-# hist_module = Extension(
-#     'im3D.histogram', 
-#     ['im3D/pyx_src/histogram/histogram.pyx',], 
-#     extra_compile_args=['-O3', '-fPIC', '-fopenmp',]
-# )
-# 
-# metrics_module = Extension(
-#     'im3D.metrics', 
-#     ['im3D/pyx_src/metrics/metrics.pyx',], 
-#     extra_compile_args=['-O3', '-fPIC', '-fopenmp',]
-# )
-# 
-# cmdclass = { 'build_ext': build_ext }
-# ext_modules = [hist_module, metrics_module]
+# scan a directory for extension files, converting them to
+# extension names in dotted notation
+def scandir(dir, files=[]):
+    for file in os.listdir(dir):
+        path = os.path.join(dir, file)
+        if os.path.isfile(path) and path.endswith(".pyx"):
+            files.append(path.replace(os.path.sep, ".")[:-4])
+        elif os.path.isdir(path):
+            scandir(path, files)
+    return files
+
 # ==============================================================
-# from Cython.Build import cythonize
-# 
-# pyx_files = ['im3D/histogram/pyx_src/_cy_hist_.pyx',
-#              'im3D/metrics/pyx_src/_cy_metrics_.pyx']
-# ext_modules = cythonize(pyx_files)
+# generate an Extension object from its dotted name
+def makeExtension(extName):
+    extPath = extName.replace(".", os.path.sep)+".pyx"
+    return Extension(
+        extName,
+        [extPath],
+        include_dirs = ['.'],   # adding the '.' to include_dirs is CRUCIAL!!
+        extra_compile_args = ["-O3", "-Wall", "-fPIC"],
+        extra_link_args = [],
+        libraries = [],
+        )
+
+# ==============================================================
+# get the list of extensions
+extNames = scandir("im3D")
+# and build up the set of Extension objects
+extensions = [makeExtension(name) for name in extNames]
 # ==============================================================
 setup(
-    name='im3D',
+    name="im3D",
     version='0.1.0',
     author='John Gibbs',
     author_email='jwgibbs@u.northwestern.edu',
     packages=['im3D', 'im3D.histogram', 'im3D.metrics', 'im3D.smoothing'], #
-    scripts=glob.glob('bin/*.so'),
     url=None,
     license='LICENSE.txt',
     description='3D image processing and visualization',
     long_description=open('README.txt').read(),
-    #cmdclass = cmdclass,
-    #ext_modules=ext_modules,
+    ext_modules=extensions,
+    cmdclass = {'build_ext': build_ext},
 )
-
