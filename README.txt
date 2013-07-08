@@ -1,12 +1,20 @@
+DESCRIPTION
+===========
+...
+
 INSTALL
 =======
-
-Create the distribution::
-    $ python setup.py sdist
-
 Install::
-    $ cd im3D
-    $ make
-    $ make install
-    $ cd ../
-    $ python setup.py install [--user]
+    $ python setup.py install
+
+MODULES
+=======
+    * im3D.curvature - calculating curvature of level sets
+    * im3D.histogram - calculating 1D and 2D histograms
+    * im3D.io - reading and writing tiff files
+    * im3D.metrics - various metrics of 3D datasets
+    * im3D.sdf - reinitializing a signed distance function
+    * im3D.shapes - making various simple shapes
+    * im3D.smoothing - smoothing data
+    * im3D.transform - Affine transforming data
+    
