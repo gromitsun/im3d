@@ -1,7 +1,7 @@
-cimport rotate_2D
-cimport rotate_3D
-cimport translate_2D
-cimport translate_3D
+import rotate_2D
+import rotate_3D
+import translate_2D
+import translate_3D
 # ==============================================================
 def rotate(arr, theta, ctr=None):
     """

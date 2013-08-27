@@ -1,2 +1,2 @@
-from rotate import rotate
-from translate import translate
+from .rotate import rotate
+from .translate import translate
