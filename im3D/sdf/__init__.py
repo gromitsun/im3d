@@ -33,8 +33,8 @@ def reinit(phi, dt=0.25, tol=0.25, band=5.0, verbose=1,
     """
     import numpy as np
     #
-    import reinit_2D
-    import reinit_3D
+    from im3D.sdf import reinit_2D
+    from im3D.sdf import reinit_3D
     # ==============================================================
     phi = np.require(phi, dtype=np.float64, requirements=('C', 'A'))
     verbose = np.intc(verbose)

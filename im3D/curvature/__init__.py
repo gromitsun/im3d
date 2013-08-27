@@ -22,8 +22,8 @@ def H(phi):
     
     """
     import numpy as np
-    import curv_2D
-    import curv_3D
+    from im3D.curvature import curv_2D
+    from im3D.curvature import curv_3D
     phi = np.require(phi, dtype=np.float64, requirements=['C_CONTIGUOUS', 'ALIGNED'])
     #
     if phi.ndim == 2:
@@ -40,8 +40,8 @@ def K(phi):
         mean and Gaussian curvatures are the same.
     """
     import numpy as np
-    import curv_2D
-    import curv_3D
+    from im3D.curvature import curv_2D
+    from im3D.curvature import curv_3D
     phi = np.require(phi, dtype=np.float64, requirements=['C_CONTIGUOUS', 'ALIGNED'])
     #
     if phi.ndim == 3:
@@ -74,8 +74,8 @@ def K1(phi):
     
     """
     import numpy as np
-    import curv_2D
-    import curv_3D
+    from im3D.curvature import curv_2D
+    from im3D.curvature import curv_3D
     phi = np.require(phi, dtype=np.float64, requirements=['C_CONTIGUOUS', 'ALIGNED'])
     #
     if phi.ndim == 3:
@@ -108,8 +108,8 @@ def K2(phi):
     
     """
     import numpy as np
-    import curv_2D
-    import curv_3D
+    from im3D.curvature import curv_2D
+    from im3D.curvature import curv_3D
     phi = np.require(phi, dtype=np.float64, requirements=['C_CONTIGUOUS', 'ALIGNED'])
     #
     if phi.ndim == 3:

@@ -30,7 +30,7 @@ def makeExtension(extName):
         extName,
         [extPath],
         include_dirs = ['.'],   # adding the '.' to include_dirs is CRUCIAL!!
-        extra_compile_args = ["-O3", "-Wall", "-fPIC"],
+        extra_compile_args = ["-O3", "-Wall", "-fPIC", "-fopenmp"],
         extra_link_args = [],
         libraries = [],
         )
