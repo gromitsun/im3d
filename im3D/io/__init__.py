@@ -22,6 +22,10 @@ def read_tiff(fn):
         to be installed.
     
     """
+    # Test to see if the file exists:
+    import os
+    if not os.path.exists(fn):
+        raise IOError("File '%s' does not exist" % fn)
     # Load numpy for access to arrays
     import numpy as np
     # Load the necessary module
