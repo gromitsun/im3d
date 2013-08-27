@@ -71,10 +71,10 @@ def reinit(double[:,:] in_arr, double dt,
         #=======================================================
         if verbose==1:
             fmts = " | {:5d} | {:10d} | "
-            print fmts.format(iter, num)
+            print(fmts.format(iter, num))
         if verbose==2:
             fmts = " | {:5d} | {:10d} | {:10.3f} | {:10.3f} | "
-            print fmts.format(iter, num, max_err, max_phi)
+            print(fmts.format(iter, num, max_err, max_phi))
         #=========================================================
     # end while loop
     return np.asarray(phi[bdry:-bdry, bdry:-bdry])

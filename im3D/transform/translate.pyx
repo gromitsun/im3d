@@ -35,7 +35,7 @@ def rotate(arr, theta, ctr=None):
     rot *= np.pi/180.0
     #
     if arr.ndim != ctr.size:
-        print "'ctr' must have exactly one value for each axis in arr"
+        print("'ctr' must have exactly one value for each axis in arr")
         return
     #
     if arr.ndim == 2:

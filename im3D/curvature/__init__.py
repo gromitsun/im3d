@@ -31,7 +31,7 @@ def H(phi):
     elif phi.ndim == 3:
         return curv_3D.H(phi)
     else:
-        print "Only 2D and 3D arrays supported"
+        print("Only 2D and 3D arrays supported")
         return None
 # ==============================================================
 def K(phi):
@@ -47,7 +47,7 @@ def K(phi):
     if phi.ndim == 3:
         return curv_3D.K(phi)
     else:
-        print "Only 3D arrays supported"
+        print("Only 3D arrays supported")
         return None
 # ==============================================================
 def K1(phi):
@@ -81,7 +81,7 @@ def K1(phi):
     if phi.ndim == 3:
         return curv_3D.K1(phi)
     else:
-        print "Only 3D arrays supported"
+        print("Only 3D arrays supported")
         return None
 # ==============================================================
 def K2(phi):
@@ -115,6 +115,6 @@ def K2(phi):
     if phi.ndim == 3:
         return curv_3D.K2(phi)
     else:
-        print "Only 3D arrays supported"
+        print("Only 3D arrays supported")
         return None
 # ==============================================================

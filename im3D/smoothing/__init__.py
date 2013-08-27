@@ -47,7 +47,7 @@ def ds(arr, it=10, dt=0.10, D=None, bc='mirror'):
     else:
         D = np.array(D, dtype=np.float64)
     if arr.ndim != D.size:
-        print "D must have exactly one value for each axis in arr"
+        print("D must have exactly one value for each axis in arr")
         return arr
     #
     if  bc == 'fixed':
@@ -55,7 +55,7 @@ def ds(arr, it=10, dt=0.10, D=None, bc='mirror'):
     elif bc == 'mirror':
         bc_type = 1
     else:
-        print "bc must have a value of 'mirror' or 'fixed'"
+        print("bc must have a value of 'mirror' or 'fixed'")
         return arr
     #
     it  = int(it)
@@ -75,7 +75,7 @@ def ds(arr, it=10, dt=0.10, D=None, bc='mirror'):
         D0,D1,D2,D3, = D[...]
         return np.asarray(DS_4D.isotropic(arr, it, dt, D0, D1, D2, D3, bc_type))
     else:
-        print "Array must be 1, 2, 3 or 4 dimensions"
+        print("Array must be 1, 2, 3 or 4 dimensions")
     #
 
 # ==============================================================
@@ -126,7 +126,7 @@ def aniso_ds(arr, it=10, dt=0.10, bc='mirror'):
     elif bc == 'mirror':
         bc_type = 1
     else:
-        print "bc must have a value of 'mirror' or 'fixed'"
+        print("bc must have a value of 'mirror' or 'fixed'")
         return arr
     #
     it  = int(it)
@@ -138,7 +138,7 @@ def aniso_ds(arr, it=10, dt=0.10, bc='mirror'):
     elif len(arr.shape) == 3:
         return np.asarray(DS_3D.anisotropic(arr, it, dt, bc_type))
     else:
-        print "Array must be 2 or 3 dimensions"
+        print("Array must be 2 or 3 dimensions")
     #
 
 # ==============================================================
@@ -192,6 +192,6 @@ def mmc(arr, it=25, dt=0.0025, scale=None):
     elif len(arr.shape) == 3:
         return np.asarray(MMC_3D.MMC_3D(arr, it, dt, eps))
     else:
-        print "Array must be 2 or 3 dimensions"
+        print("Array must be 2 or 3 dimensions")
     #
 
