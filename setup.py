@@ -1,4 +1,4 @@
-import sys, os, stat, commands
+import sys, os, stat
 from distutils.core import setup
 from distutils.extension import Extension
 # Check for Cython
