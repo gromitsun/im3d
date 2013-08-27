@@ -9,11 +9,11 @@ It also contains tools for visualizing data.  Examples of this
 include histograms and interfacial shape distributions (ISD)
 """
 
-import curvature
-import histogram
-import io
-import metrics
-import sdf
-import shapes
-import smoothing
-import transform
+import im3D.curvature
+import im3D.histogram
+import im3D.io
+import im3D.metrics
+import im3D.sdf
+import im3D.shapes
+import im3D.smoothing
+import im3D.transform
