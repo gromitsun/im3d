@@ -36,9 +36,9 @@ def ds(arr, it=10, dt=0.10, D=None, bc='mirror'):
      - No flux boundary conditions
     """
     # ==========================================================
-    #         1D      2D      3D      4D  
-    #       ======  ======  ======  ======
-    import   DS_1D,  DS_2D,  DS_3D,  DS_4D
+    #                            1D      2D      3D      4D  
+    #                          ======  ======  ======  ======
+    from im3D.smoothing import DS_1D,  DS_2D,  DS_3D,  DS_4D
     # ==========================================================
     import numpy as np
     #
@@ -115,9 +115,9 @@ def aniso_ds(arr, it=10, dt=0.10, bc='mirror'):
      - No flux boundary conditions
     """
     # ==========================================================
-    #         1D      2D      3D      4D  
-    #       ======  ======  ======  ======
-    import   DS_1D,  DS_2D,  DS_3D,  DS_4D
+    #                             1D      2D      3D      4D  
+    #                           ======  ======  ======  ======
+    from im3D.smoothing import  DS_1D,  DS_2D,  DS_3D,  DS_4D
     # ==========================================================
     import numpy as np
     #
@@ -144,9 +144,9 @@ def aniso_ds(arr, it=10, dt=0.10, bc='mirror'):
 # ==============================================================
 def mmc(arr, it=25, dt=0.0025, scale=None):
     # ==========================================================
-    #         1D      2D      3D      4D  
-    #       ======  ======  ======  ======
-    import          MMC_2D, MMC_3D         
+    #                            1D      2D      3D      4D  
+    #                          ======  ======  ======  ======
+    from im3D.smoothing import        MMC_2D, MMC_3D         
     # ==========================================================
     """
     Motion by mean curvature
