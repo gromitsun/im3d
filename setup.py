@@ -1,4 +1,4 @@
-import sys, os, stat
+import sys, os, stat, site
 from distutils.core import setup
 from distutils.extension import Extension
 # Check for Cython
@@ -29,10 +29,11 @@ def makeExtension(extName):
     return Extension(
         extName,
         [extPath],
-        include_dirs = ['.'],   # adding the '.' to include_dirs is CRUCIAL!!
-        extra_compile_args = ["-O3", "-Wall", "-fPIC", "-fopenmp"],
-        extra_link_args = [],
-        libraries = [],
+        include_dirs = [site.PREFIXES[0]+'/include', '.'],   # adding the '.' to include_dirs is CRUCIAL!!
+        library_dirs = [site.PREFIXES[0]+'/lib'],
+        extra_compile_args = ["-O3", "-fopenmp", "-Wno-maybe-uninitialized"],
+        extra_link_args = ["-fopenmp"],
+        libraries = ['python2.7'],
         )
 
 # ==============================================================
@@ -48,6 +49,7 @@ setup(
     author_email='jwgibbs@u.northwestern.edu',
     packages=['im3D', 
               'im3D.curvature', 
+              'im3D.gradient', 
               'im3D.histogram', 
               'im3D.io', 
               'im3D.metrics', 
