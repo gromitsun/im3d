@@ -13,6 +13,7 @@ import im3D.curvature
 import im3D.histogram
 import im3D.gradient
 import im3D.io
+import im3D.isd
 import im3D.metrics
 import im3D.sdf
 import im3D.shapes
