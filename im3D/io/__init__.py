@@ -39,20 +39,28 @@ def read_tiff(fn):
     # to select a smaller portion of the file to read, which 
     # makes the actual reading from the hard drive faster
     # 
-    # Read the data that is in the file
-    im_data = im_file.getdata()
+    # Check to see if it is an 6-bit of 16-bit tiff:
+    if im_file.mode == 'L':
+        nbits = 8
+    elif im_file.mode == 'I;16':
+        nbits = 16
     # 
-    # Convert the not-very-useful PIL format to an array
-    im = np.asarray(im_data, dtype=np.uint16)
-    # 
-    # The data will be in a 1D array so you need to reshape it.
-    # You can use the information in im_data.size, but be 
-    # because it is in the opposite order of what you want (i.e.
-    # it is in (y_size, x_size) and you want (x_size, y_size) so
-    # you have to index it with [::-1] to reverse the order
-    im_shape = im_data.size[::-1]
-    im = im.reshape(im_shape)
-    # 
+    # Go straight to an array if it's 8-bit:
+    if nbits == 8:
+        im = np.asarray(im_file, dtype=np.uint8)
+    # A little more work if it's 16-bit:
+    elif nbits == 16:
+        # Read the data that is in the file
+        im_data = im_file.getdata()
+        # Convert the not-very-useful PIL format to an array
+        im = np.asarray(im_data, dtype=np.uint16)
+        # The data will be in a 1D array so you need to reshape it.
+        # You can use the information in im_data.size, but be 
+        # because it is in the opposite order of what you want (i.e.
+        # it is in (y_size, x_size) and you want (x_size, y_size) so
+        # you have to index it with [::-1] to reverse the order
+        im_shape = im_data.size[::-1]
+        im = im.reshape(im_shape)
     # Return the array:
-    return im.astype(np.float64)
+    return im
 
