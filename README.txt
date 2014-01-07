@@ -5,6 +5,7 @@ DESCRIPTION
 INSTALL
 =======
 Install::
+    $ export CC=/usr/local/bin/gcc-4.8 (or whatever compiler you want)
     $ python setup.py install
 
 MODULES
