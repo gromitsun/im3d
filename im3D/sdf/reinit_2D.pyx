@@ -99,7 +99,7 @@ cdef double[:,:] UW_phi_t(double[:,:] phi):
           # IS DONE WITH THE +1.0 IN THE SQRT AND IS DONE TO
           # SLOW THE RATE AT WHICH VALUES NEAR THE INTERFACE 
           # CHANGE.
-          sgn = phi[x,y]/sqrt(phi[x,y]**2 + 1.0E-2)
+          sgn = phi[x,y]/sqrt(phi[x,y]**2 + 1.0E+1)
           # ==========================================================
           # CALCULATE BOTH BACKWARD (e.g. gXm) AND FORWARD 
           # (e.g. gXp) DERIVATIVES
