@@ -75,10 +75,10 @@ def translate(arr, disp):
     #
     if arr.ndim == 2:
         dX, dY, = disp[...]
-        arr2 = translate_2D.translate(arr, dX, dY)
+        arr2 = translate_2D.translate_2D(arr, dX, dY)
     elif arr.ndim == 3:
         dX, dY, dZ = disp[...]
-        arr2 = translate_3D.translate(arr, dX, dY, dZ)
+        arr2 = translate_3D.translate_3D(arr, dX, dY, dZ)
     #
     return np.asarray(arr2)
 # ==============================================================

@@ -9,7 +9,7 @@ import numpy as np
 from libc.math cimport sin, cos, sqrt, fabs, atan, atan2, floor, ceil
 from cython.parallel cimport prange
 # ==============================================================
-cdef double[:,:,:] rotate(double[:,:,:] in_arr,
+def rotate_3D(double[:,:,:] in_arr,
     double x_rot, double y_rot, double z_rot,
     double x_ctr, double y_ctr, double z_ctr):
     """
@@ -103,6 +103,6 @@ cdef double[:,:,:] rotate(double[:,:,:] in_arr,
           # end for z loop
         # end for y loop
       # end for x loop
-    return arr
+    return np.asarray(arr)
 # ==============================================================
 

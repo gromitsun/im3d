@@ -12,7 +12,7 @@ from libc.math cimport floor
 cimport cython
 from cython.parallel cimport prange
 # ==============================================================
-cdef double[:,:] translate(double[:,:] in_arr, double dX, double dY):
+def translate_2D(double[:,:] in_arr, double dX, double dY):
     """
     dX, dY --> Amount of translation
     """
@@ -60,5 +60,5 @@ cdef double[:,:] translate(double[:,:] in_arr, double dX, double dY):
                                W_HH * in_arr[x_hi, y_hi]
             # end for y loop
         # end for x loop
-    return arr
+    return np.asarray(arr)
 # ==============================================================
