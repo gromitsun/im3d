@@ -20,12 +20,12 @@ cdef inline double d_min(double a, double b) nogil:
 cdef inline double sign(double a) nogil:
     return 0.0 if a == 0.0 else sqrt(a*a)/a
 # ==============================================================
-def reinit(double[:,:,:] in_arr, double dt, 
+def reinit(double[:,:,::1] in_arr, double dt, 
     double tol, double band, int verbose, int max_it, 
     int use_weno):
     # ==========================================================
     cdef:
-        double[:,:,:] phi, phi_t
+        double[:,:,::1] phi, phi_t
         ssize_t  bdry=3
         ssize_t  x, nX = in_arr.shape[0] + 2*bdry
         ssize_t  y, nY = in_arr.shape[1] + 2*bdry
@@ -83,7 +83,7 @@ def reinit(double[:,:,:] in_arr, double dt,
     # end while loop
     return np.asarray(phi[bdry:-bdry, bdry:-bdry, bdry:-bdry])
 # ==============================================================
-cdef double[:,:,:] UW_phi_t(double[:,:,:] phi):
+cdef double[:,:,::1] UW_phi_t(double[:,:,::1] phi):
     """
     Upwind gradient
     """
@@ -94,7 +94,7 @@ cdef double[:,:,:] UW_phi_t(double[:,:,:] phi):
         ssize_t  y, nY = phi.shape[1]
         ssize_t  z, nZ = phi.shape[2]
         double sgn, gX, gXm, gXp, gY, gYm, gYp, gZ, gZm, gZp
-        double[:,:,:] phi_t = np.empty((nX,nY,nZ), dtype=np.float64)
+        double[:,:,::1] phi_t = np.empty((nX,nY,nZ), dtype=np.float64)
     #===========================================================
     with nogil:
       for x in prange(0+bdry,nX-bdry):
@@ -141,7 +141,7 @@ cdef double[:,:,:] UW_phi_t(double[:,:,:] phi):
       # end x for loop
     return phi_t
 #===============================================================
-cdef double[:,:,:] WENO_phi_t(double[:,:,:] phi):
+cdef double[:,:,::1] WENO_phi_t(double[:,:,::1] phi):
     """
     WENO gradient based dphi/dt
     """
@@ -155,7 +155,7 @@ cdef double[:,:,:] WENO_phi_t(double[:,:,:] phi):
         double   V1, V2, V3, V4, V5
         double   sgn
         #
-        double[:,:,:] phi_t = np.empty((nX,nY,nZ), dtype=np.float64)
+        double[:,:,::1] phi_t = np.empty((nX,nY,nZ), dtype=np.float64)
     # ==========================================================
     with nogil:
       for x in prange(0+bdry,nX-bdry):
@@ -285,7 +285,7 @@ cdef double WENO(double V1, double V2, double V3, double V4, double V5) nogil:
     #===========================================================
     return W1*G1 + W2*G2 + W3*G3
 # ==============================================================
-cdef double[:,:,:] ApplyBCs_3D(double[:,:,:] phi, ssize_t bdry) nogil:
+cdef double[:,:,::1] ApplyBCs_3D(double[:,:,::1] phi, ssize_t bdry) nogil:
     #
     cdef:
         ssize_t i
