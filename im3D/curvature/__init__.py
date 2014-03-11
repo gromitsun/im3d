@@ -19,6 +19,8 @@ def H(phi):
     =======
         H ----> 2D or 3D numpy array
                 This will have the same dimensions as phi
+                It will also have the same datatype as phi (either 
+                32- or 64-bit floats)
     
     """
     import numpy as np
@@ -27,9 +29,15 @@ def H(phi):
     phi = np.require(phi, dtype=np.float64, requirements=['C_CONTIGUOUS', 'ALIGNED'])
     #
     if phi.ndim == 2:
+        phi = np.require(phi, dtype=np.float64)
         return curv_2D.H(phi)
     elif phi.ndim == 3:
-        return curv_3D.H(phi)
+        if phi.dtype == np.float32:
+            return curv_3D.H_32(phi)
+        elif phi.dtype == np.float64:
+            return curv_3D.H_64(phi)
+        else:
+            raise ValueError('Datatype must be 32 or 64 bit floats')
     else:
         print("Only 2D and 3D arrays supported")
         return None
@@ -45,12 +53,17 @@ def K(phi):
     phi = np.require(phi, dtype=np.float64, requirements=['C_CONTIGUOUS', 'ALIGNED'])
     #
     if phi.ndim == 3:
-        return curv_3D.K(phi)
+        if phi.dtype == np.float32:
+            return curv_3D.K_32(phi)
+        elif phi.dtype == np.float64:
+            return curv_3D.K_64(phi)
+        else:
+            raise ValueError('Datatype must be 32 or 64 bit floats')
     else:
         print("Only 3D arrays supported")
         return None
 # ==============================================================
-def K1(phi):
+def k1(phi):
     """
     Principal curvature
     
@@ -69,7 +82,7 @@ def K1(phi):
     
     OUTPUTS
     =======
-        H ----> 3D numpy array
+        k1 ---> 3D numpy array
                 This will have the same dimensions as phi
     
     """
@@ -79,12 +92,17 @@ def K1(phi):
     phi = np.require(phi, dtype=np.float64, requirements=['C_CONTIGUOUS', 'ALIGNED'])
     #
     if phi.ndim == 3:
-        return curv_3D.K1(phi)
+        if phi.dtype == np.float32:
+            return curv_3D.k1_32(phi)
+        elif phi.dtype == np.float64:
+            return curv_3D.k1_64(phi)
+        else:
+            raise ValueError('Datatype must be 32 or 64 bit floats')
     else:
         print("Only 3D arrays supported")
         return None
 # ==============================================================
-def K2(phi):
+def k2(phi):
     """
     Principal curvature
     
@@ -93,7 +111,7 @@ def K2(phi):
         Calculates one of the principal curvatures a 3D signed 
         distance function:
         
-        K2 = H + sqrt(H^2-K)
+        k2 = H + sqrt(H^2-K)
         
     INPUTS
     ======
@@ -103,7 +121,7 @@ def K2(phi):
     
     OUTPUTS
     =======
-        H ----> 3D numpy array
+        k2 ---> 3D numpy array
                 This will have the same dimensions as phi
     
     """
@@ -113,7 +131,12 @@ def K2(phi):
     phi = np.require(phi, dtype=np.float64, requirements=['C_CONTIGUOUS', 'ALIGNED'])
     #
     if phi.ndim == 3:
-        return curv_3D.K2(phi)
+        if phi.dtype == np.float32:
+            return curv_3D.k2_32(phi)
+        elif phi.dtype == np.float64:
+            return curv_3D.k2_64(phi)
+        else:
+            raise ValueError('Datatype must be 32 or 64 bit floats')
     else:
         print("Only 3D arrays supported")
         return None
