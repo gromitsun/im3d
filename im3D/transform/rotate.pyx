@@ -42,12 +42,12 @@ def rotate(arr, theta, ctr=None):
         z_rot, = rot[...]
         x_ctr, y_ctr = ctr[...]
         #
-        arr2 = rotate_2D.rotate(arr, z_rot, x_ctr, y_ctr)
+        arr2 = rotate_2D.rotate_2D(arr, z_rot, x_ctr, y_ctr)
     elif arr.ndim == 3:
         x_rot, y_rot, z_rot = rot[...]
         x_ctr, y_ctr, z_ctr = ctr[...]
         #
-        arr2 = rotate_3D.rotate(arr, x_rot, y_rot, z_rot, x_ctr, y_ctr, z_ctr)
+        arr2 = rotate_3D.rotate_3D(arr, x_rot, y_rot, z_rot, x_ctr, y_ctr, z_ctr)
     #
     return np.asarray(arr2)
 # ==============================================================

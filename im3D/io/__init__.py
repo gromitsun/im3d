@@ -1,4 +1,4 @@
-def read_tiff(fn):
+def PIL_read_tiff(fn):
     """
     USEAGE
     ======
@@ -61,6 +61,41 @@ def read_tiff(fn):
         # you have to index it with [::-1] to reverse the order
         im_shape = im_data.size[::-1]
         im = im.reshape(im_shape)
+    # Return the array:
+    return im
+
+def read_tiff(fn):
+    """
+    USEAGE
+    ======
+        >>> fn = '/path/to/tiff_image.tiff'
+        >>> im = read_tiff(fn)
+        >>> ... do stuff with im ...
+    
+    INPUTS
+    ======
+        fn ---> string; required
+                Filename of the image that you want to read
+    
+    OUTPUTS
+    =======
+        im ---> numpy array
+                The image, formatted as an array
+    
+    NOTES
+    =====
+        This requires both Numpy and Python Image Library (PIL)
+        to be installed.
+    
+    """
+    # Test to see if the file exists:
+    import os
+    if not os.path.exists(fn):
+        raise IOError("File '%s' does not exist" % fn)
+    # Load the necessary module
+    import skimage.io
+    skimage.io.use_plugin('freeimage')
+    im = skimage.io.imread(fn, plugin='freeimage')
     # Return the array:
     return im
 

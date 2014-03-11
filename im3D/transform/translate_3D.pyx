@@ -12,7 +12,7 @@ from libc.math cimport floor, ceil
 cimport cython
 from cython.parallel cimport prange
 # ==============================================================
-cdef double[:,:,:] translate(double[:,:,:] in_arr,
+def translate_3D(double[:,:,:] in_arr,
     double dX, double dY, double dZ):
     """
     dX, dY, dZ --> Amount of translation
@@ -77,6 +77,6 @@ cdef double[:,:,:] translate(double[:,:,:] in_arr,
           # end for z loop
         # end for y loop
       # end for x loop
-    return arr
+    return np.asarray(arr)
 # ==============================================================
 

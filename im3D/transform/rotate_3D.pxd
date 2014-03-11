@@ -1,3 +1,3 @@
-cdef double[:,:,:] rotate(double[:,:,:], 
-    double, double, double, 
-    double, double, double)
+#cdef double[:,:,:] rotate(double[:,:,:], 
+#    double, double, double, 
+#    double, double, double)

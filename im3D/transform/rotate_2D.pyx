@@ -9,7 +9,7 @@ import numpy as np
 from libc.math cimport sin, cos, sqrt, fabs, atan, atan2, floor, ceil
 from cython.parallel cimport prange
 # ==============================================================
-cdef double[:,:] rotate(double[:,:] in_arr, double theta, 
+def rotate_2D(double[:,:] in_arr, double theta, 
     double x_ctr, double y_ctr):
     """
     theta --> rotation amount in degrees
@@ -70,7 +70,7 @@ cdef double[:,:] rotate(double[:,:] in_arr, double theta,
                                W_HH * in_arr[x_hi, y_hi]
             # end for y loop
         # end for x loop
-    return arr
+    return np.asarray(arr)
 # ==============================================================
 
 ## determine polar coordinates
