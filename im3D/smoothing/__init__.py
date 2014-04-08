@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 def ds(arr, it=10, dt=0.10, D=None, bc='mirror'):
     """
     Diffusion smoothing

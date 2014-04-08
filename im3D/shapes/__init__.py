@@ -1,3 +1,5 @@
-from .shapes import circle
-from .shapes import sphere
-from .shapes import hyperbaloid
+from __future__ import absolute_import
+
+from im3D.shapes.shapes import circle
+from im3D.shapes.shapes import sphere
+from im3D.shapes.shapes import hyperbaloid

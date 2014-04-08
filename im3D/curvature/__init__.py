@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 def H(phi):
     """
     Mean curvature

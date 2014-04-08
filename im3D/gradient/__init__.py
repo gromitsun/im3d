@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 def grad(arr, order=1):
     """
     arr --- Numpy array; required
