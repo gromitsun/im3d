@@ -1,10 +1,3 @@
-#cython: boundscheck=False
-#cython: wraparound=False
-#cython: cdivision=True
-#cython: embedsignature=True
-
-# cython: profile=False
-# ==============================================================
 import numpy as np
 from cython.parallel cimport prange
 #=== Functions from math.h =====================================================
@@ -16,18 +9,18 @@ cdef extern from "math.h":
     double fabs(double) nogil
 #=== Define some useful functions =====================================================
 # floats
-cdef inline float f_max(float a, float b) nogil:
+cdef inline float fmax(float a, float b) nogil:
     return a if a >= b else b
-cdef inline float f_min(float a, float b) nogil:
+cdef inline float fmin(float a, float b) nogil:
     return a if a <= b else b
-cdef inline float f_sign(float a) nogil:
+cdef inline float fsign(float a) nogil:
     return 0.0 if a == 0.0 else sqrt(a*a)/a
 # doubles
 cdef inline double d_max(double a, double b) nogil:
     return a if a >= b else b
 cdef inline double d_min(double a, double b) nogil:
     return a if a <= b else b
-cdef inline double d_sign(double a) nogil:
+cdef inline double dsign(double a) nogil:
     return 0.0 if a == 0.0 else sqrt(a*a)/a
 # ==============================================================
 def reinit(double[:,:,::1] in_arr, double dt, 

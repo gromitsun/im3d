@@ -1,7 +1,24 @@
 from __future__ import absolute_import
 
-def reinit(phi, dt=0.25, tol=0.25, band=5.0, verbose=1, 
-           max_it=-1, use_weno=False):
+# ==============================================================
+def subcell(phi, dt=0.25, max_it=25):
+    import numpy as np
+    from im3D.sdf.f_reinit_3D_UW import reinit
+    # ==============================================================
+    phi = np.require(phi, dtype=np.float32, requirements=('C', 'A'))
+    phi = reinit(phi, dt, max_it, 5.0, 1)
+    return phi
+
+# ==============================================================
+def subcell_WENO(phi, dt=0.25, max_it=25):
+    import numpy as np
+    from im3D.sdf.f_reinit_3D_WENO import reinit
+    # ==============================================================
+    phi = np.require(phi, dtype=np.float32, requirements=('C', 'A'))
+    phi = reinit(phi, dt, max_it, 5.0, 1)
+    return phi
+
+def reinit(phi, dt=0.25, tol=0.25, band=None, verbose=False, max_it=-1):
     """
     INPUTS
     ======
@@ -36,16 +53,27 @@ def reinit(phi, dt=0.25, tol=0.25, band=5.0, verbose=1,
     from im3D.sdf import reinit_2D
     from im3D.sdf import reinit_3D
     # ==============================================================
-    phi = np.require(phi, dtype=np.float64, requirements=('C', 'A'))
+    ndim = phi.ndim
+    dtype = phi.dtype
+    if ndim not in [2, 3]:
+        raise ValueError('This function only works for 2D or 3D arrays')
+    if dtype not in [np.float32, np.float64]:
+        raise ValueError('This function only works for 32-bit and 64-bit values')
+    # 
+    phi = np.require(phi, requirements=('C_CONTIGUOUS', 'ALIGNED'))
     verbose = np.intc(verbose)
     use_weno = np.intc(use_weno)
+    if band == None:
+        band = np.size(phi)
     #
-    if phi.ndim == 2:
+    if   (phi.ndim == 2) and (np.dtype == np.float32):
         phi = reinit_2D.reinit(phi, dt, tol, band, verbose, max_it, use_weno)
-    elif phi.ndim == 3:
+    elif (phi.ndim == 2) and (np.dtype == np.float64):
+        phi = reinit_2D.reinit(phi, dt, tol, band, verbose, max_it, use_weno)
+    elif (phi.ndim == 3) and (np.dtype == np.float32):
         phi = reinit_3D.reinit(phi, dt, tol, band, verbose, max_it, use_weno)
-    else:
-        raise ValueError("phi must be 2 or 3 dimesnsions")
+    elif (phi.ndim == 3) and (np.dtype == np.float64):
+        phi = reinit_3D.reinit(phi, dt, tol, band, verbose, max_it, use_weno)
     #
     return phi
 # ==============================================================
