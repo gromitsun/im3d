@@ -8,6 +8,7 @@ from libc.math cimport floor
 # ==============================================================
 def hist2D(arr1, arr2, weight=None, min=None, max=None, int nbins=100, normed=False):
     """
+    This is actually a joint histogram, not a regular 2D histogram
     """
     # ==========================================================
     if weight == None:
