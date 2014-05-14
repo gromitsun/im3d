@@ -70,7 +70,7 @@ setup(
     url=None,
     license='LICENSE.txt',
     description='3D image processing and visualization',
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
     ext_modules=extensions,
     cmdclass = {'build_ext': build_ext},
 )
