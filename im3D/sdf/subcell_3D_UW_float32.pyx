@@ -118,11 +118,12 @@ def reinit(float[:,:,::1] phi_0, float dt, int max_it, float band, int verbose):
         if verbose==1:
             fmts = " | {:5d} | {:10d} | {:10.3f} | {:10.3f} | "
             print(fmts.format(iter, num, max_err, max_phi))
-        #=========================================================
+        # end print loop
     # end while loop
     return np.asarray(phi, dtype=np.float32)
 
-# ==============================================================
+#=== Constant first derivative boundary conditions =============================
+# Actually doing a constant first derivative boundary condition is unstable
 cdef void BCs_const_first_deriv(float[:,:,::1] arr) nogil:
     #
     cdef ssize_t x, nx=arr.shape[0]
@@ -146,5 +147,3 @@ cdef void BCs_const_first_deriv(float[:,:,::1] arr) nogil:
       for z in range(nz):
         arr[xmin-1, y, z] = arr[xmin, y, z]# - (arr[xmin+1, y, z] - arr[xmin+0, y, z])
         arr[xmax+1, y, z] = arr[xmax, y, z]# - (arr[xmax-1, y, z] - arr[xmax+0, y, z])
-
-# ==============================================================

@@ -1,9 +1,0 @@
-MANIFEST
-build
-dist
-bin
-im3D/*.pyc
-im3D/*/*.c
-im3D/*/*.html
-im3D/*/*.pyc
-

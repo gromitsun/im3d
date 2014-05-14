@@ -41,6 +41,13 @@ def makeExtension(extName):
 extNames = scandir("im3D")
 # and build up the set of Extension objects
 extensions = [makeExtension(name) for name in extNames]
+for ext in extensions:
+    ext.cython_directives = {}
+    ext.cython_directives["boundscheck"] = False
+    ext.cython_directives["wraparound"] = False
+    ext.cython_directives["cdivision"] = True
+    ext.cython_directives["embedsignature"] = True
+    ext.cython_directives["profile"] = False
 # ==============================================================
 setup(
     name="im3D",
@@ -63,7 +70,7 @@ setup(
     url=None,
     license='LICENSE.txt',
     description='3D image processing and visualization',
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
     ext_modules=extensions,
     cmdclass = {'build_ext': build_ext},
 )
