@@ -101,3 +101,87 @@ def read_tiff(fn):
     # Return the array:
     return im
 
+
+def read(fn):
+    """
+    USEAGE
+    ======
+    >>> fn = '/path/to/tiff_image.png'
+    >>> im = read(fn)
+    >>> ... do stuff with im ...
+    
+    INPUTS
+    ======
+    fn : string; required
+        Filename of the image that you want to read
+    
+    OUTPUTS
+    =======
+    im : numpy array
+        The image, formatted as an array
+    
+    NOTES
+    =====
+    This requires Scikits-image (aka skimage) and freeimage to be installed.
+    
+    """
+    # Test to see if the file exists:
+    import os
+    if not os.path.exists(fn):
+        raise IOError("File '%s' does not exist" % fn)
+    # Load the necessary module
+    import skimage.io
+    skimage.io.use_plugin('freeimage')
+    im = skimage.io.imread(fn, plugin='freeimage')
+    # Return the array:
+    return im
+
+def write(fn, im, vmin=None, vmax=None, nbits=8):
+    """
+    USEAGE
+    ======
+    >>> 
+    >>> 
+    >>> 
+    
+    INPUTS
+    ======
+    fn : string; required
+        Filename of the image that you want to read
+    
+    OUTPUTS
+    =======
+    im : numpy array
+        The image, formatted as an array
+    
+    NOTES
+    =====
+    This requires Scikits-image (aka skimage) and freeimage to be installed.
+    
+    """
+    import numpy as np
+    # Test to see if the file exists:
+    import os
+    if not os.path.exists(os.path.dirname(fn)):
+        raise IOError("File '%s' does not exist" % os.path.dirname(fn))
+    # Load the necessary module
+    import skimage.io
+    skimage.io.use_plugin('freeimage')
+    # Scale the image to either 8 or 16 bits
+    scaled_im = np.clip((im - vmin) / (vmax - vmin), 0.0, 1.0)
+    if nbits == 16:
+        scaled_im = scaled_im * (2**16 - 1)
+        scaled_im = scaled_im.astype('uint16')
+        #scaled_im = skimage.img_as_uint(scaled_im)
+    elif nbits ==8:
+        scaled_im = scaled_im * (2**8 - 1)
+        scaled_im = scaled_im.astype('uint8')
+        #scaled_im = skimage.img_as_ubyte(scaled_im)
+    else:
+        print("Can't use nbits=%i. Using nbits=8 instead" % nbits)
+        scaled_im = scaled_im * (2**8 - 1)
+        scaled_im = scaled_im.astype('uint8')
+        #scaled_im = skimage.img_as_ubyte(scaled_im)
+    # Save the image
+    skimage.io.imsave(fn, scaled_im, plugin='freeimage')
+
