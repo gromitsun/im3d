@@ -795,7 +795,7 @@ def k1_64(double[:,:,::1] arr):
     return np.asarray(K1, dtype=np.float64)
 
 #=== 2nd principal curvature; 32-bit ===========================================
-def K2(float[:,:,::1] arr):
+def k2_32(float[:,:,::1] arr):
     # Variables:
     cdef ssize_t i
     cdef ssize_t x, nX=arr.shape[0]
@@ -935,7 +935,7 @@ def K2(float[:,:,::1] arr):
     return np.asarray(K2, dtype=np.float32)
 
 #=== 2nd principal curvature; 64-bit ===========================================
-def K2(double[:,:,::1] arr):
+def k2_64(double[:,:,::1] arr):
     # Variables:
     cdef ssize_t i
     cdef ssize_t x, nX=arr.shape[0]

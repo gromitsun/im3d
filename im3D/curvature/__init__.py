@@ -27,7 +27,7 @@ def H(phi):
     import numpy as np
     from im3D.curvature import curv_2D
     from im3D.curvature import curv_3D
-    phi = np.require(phi, dtype=np.float64, requirements=['C_CONTIGUOUS', 'ALIGNED'])
+    phi = np.require(phi, requirements=['C_CONTIGUOUS', 'ALIGNED'])
     #
     if phi.ndim == 2:
         phi = np.require(phi, dtype=np.float64)
@@ -51,7 +51,7 @@ def K(phi):
     import numpy as np
     from im3D.curvature import curv_2D
     from im3D.curvature import curv_3D
-    phi = np.require(phi, dtype=np.float64, requirements=['C_CONTIGUOUS', 'ALIGNED'])
+    phi = np.require(phi, requirements=['C_CONTIGUOUS', 'ALIGNED'])
     #
     if phi.ndim == 3:
         if phi.dtype == np.float32:
@@ -90,7 +90,7 @@ def k1(phi):
     import numpy as np
     from im3D.curvature import curv_2D
     from im3D.curvature import curv_3D
-    phi = np.require(phi, dtype=np.float64, requirements=['C_CONTIGUOUS', 'ALIGNED'])
+    phi = np.require(phi, requirements=['C_CONTIGUOUS', 'ALIGNED'])
     #
     if phi.ndim == 3:
         if phi.dtype == np.float32:
@@ -129,7 +129,7 @@ def k2(phi):
     import numpy as np
     from im3D.curvature import curv_2D
     from im3D.curvature import curv_3D
-    phi = np.require(phi, dtype=np.float64, requirements=['C_CONTIGUOUS', 'ALIGNED'])
+    phi = np.require(phi, requirements=['C_CONTIGUOUS', 'ALIGNED'])
     #
     if phi.ndim == 3:
         if phi.dtype == np.float32:
