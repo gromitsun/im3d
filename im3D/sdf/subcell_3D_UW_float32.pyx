@@ -100,10 +100,12 @@ def reinit(float[:,:,::1] phi_0, float dt, int max_it, float band, int verbose):
                     # end z for loop
                 # end y for loop
             # end x for loop
-            #--- apply BCs and print current status ----------------------------------------------------------------
+            BCs_const_first_deriv(phi)
+        # end nogil
+        #--- print current status ------------------------------------------
+        if verbose==1:
             max_phi = 0.0
             max_err = 0.0
-            BCs_const_first_deriv(phi)
             for x in range(xmin, xmax+1):
                 for y in range(ymin, ymax+1):
                     for z in range(zmin, zmax+1):
@@ -114,11 +116,9 @@ def reinit(float[:,:,::1] phi_0, float dt, int max_it, float band, int verbose):
                     # end z for loop
                 # end y for loop
             # end x for loop
-        # end nogil
-        if verbose==1:
             fmts = " | {:5d} | {:10d} | {:10.3f} | {:10.3f} | "
             print(fmts.format(iter, num, max_err, max_phi))
-        # end print loop
+        # end print if statement
     # end while loop
     return np.asarray(phi, dtype=np.float32)
 

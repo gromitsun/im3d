@@ -9,9 +9,9 @@ import numpy as np
 from libc.math cimport sin, cos, sqrt, fabs, atan, atan2, floor, ceil
 from cython.parallel cimport prange
 # ==============================================================
-def rotate_3D(double[:,:,:] in_arr,
-    double x_rot, double y_rot, double z_rot,
-    double x_ctr, double y_ctr, double z_ctr):
+def rotate_3D(float[:,:,::1] in_arr,
+    float x_rot, float y_rot, float z_rot,
+    float x_ctr, float y_ctr, float z_ctr):
     """
     x_rot, y_rot, z_rot --> rotation amount in degrees
     x_ctr, y_ctr, z_ctr --> center of rotation
@@ -23,23 +23,23 @@ def rotate_3D(double[:,:,:] in_arr,
         ssize_t  z, nZ=in_arr.shape[2]
         ssize_t  x_lo, y_lo, z_lo       # 
         ssize_t  x_hi, y_hi, z_hi       # 
-        double   x_est, y_est, z_est    # Estimates of where (x,y) in
+        float    x_est, y_est, z_est    # Estimates of where (x,y) in
                                         # the out-array corresponds to
                                         # in the input array
-        double   x_rad, y_rad, z_rad    # radii for (x,y,z) in polar coord
-        double   x_phi, y_phi, z_phi    # angles for (x,y,z) in polar coord
-        double   Wx_lo, Wy_lo, Wz_lo
-        double   Wx_hi, Wy_hi, Wz_hi
-        double   W_LLL, W_LLH, W_LHL, W_LHH, W_HLL, W_HLH, W_HHL, W_HHH
-        double[:,:,:] arr = np.zeros((nX,nY,nZ), dtype=np.float64)
+        float    x_rad, y_rad, z_rad    # radii for (x,y,z) in polar coord
+        float    x_phi, y_phi, z_phi    # angles for (x,y,z) in polar coord
+        float    Wx_lo, Wy_lo, Wz_lo
+        float    Wx_hi, Wy_hi, Wz_hi
+        float    W_LLL, W_LLH, W_LHL, W_LHH, W_HLL, W_HLH, W_HHL, W_HHH
+        float[:,:,::1] arr = np.zeros((nX,nY,nZ), dtype=np.float32)
     # ==========================================================
     with nogil:
       for x in prange(nX):
         for y in range(nY):
           for z in range(nZ):
-            x_est = <double> x
-            y_est = <double> y
-            z_est = <double> z
+            x_est = <float> x
+            y_est = <float> y
+            z_est = <float> z
             # Translate so that the center of rotation is (0,0,0)
             x_est = x_est - x_ctr
             y_est = y_est - y_ctr

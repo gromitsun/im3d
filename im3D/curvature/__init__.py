@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+#=== Mean curvature ============================================================
 def H(phi):
     """
     Mean curvature
@@ -27,22 +28,30 @@ def H(phi):
     import numpy as np
     from im3D.curvature import curv_2D
     from im3D.curvature import curv_3D
-    phi = np.require(phi, requirements=['C_CONTIGUOUS', 'ALIGNED'])
-    #
-    if phi.ndim == 2:
-        phi = np.require(phi, dtype=np.float64)
-        return curv_2D.H(phi)
-    elif phi.ndim == 3:
-        if phi.dtype == np.float32:
-            return curv_3D.H_32(phi)
-        elif phi.dtype == np.float64:
-            return curv_3D.H_64(phi)
-        else:
-            raise ValueError('Datatype must be 32 or 64 bit floats')
-    else:
-        print("Only 2D and 3D arrays supported")
-        return None
-# ==============================================================
+    #=== check the number of dimensions ===
+    ndim = phi.ndim
+    if ndim not in [2, 3]:
+        raise ValueError("Only 2D and 3D arrays supported")
+    #=== check the datatype ===
+    dtype = phi.dtype
+    if dtype not in [np.float32, np.float64]:
+        raise ValueError('Datatype must be 32 or 64 bit floats')
+    #=== calculate the curvature ===
+    arr_req = ['C_CONTIGUOUS', 'ALIGNED']
+    if (ndim == 2) and (dtype == np.float32):
+        phi = np.require(phi, dtype=np.float32, requirements=arr_req)
+        return curv_2D.H_32(phi)
+    elif (ndim == 2) and (dtype == np.float64):
+        phi = np.require(phi, dtype=np.float64, requirements=arr_req)
+        return curv_2D.H_64(phi)
+    elif (ndim == 3) and (dtype == np.float32):
+        phi = np.require(phi, dtype=np.float32, requirements=arr_req)
+        return curv_3D.H_32(phi)
+    elif (ndim == 3) and (dtype == np.float64):
+        phi = np.require(phi, dtype=np.float64, requirements=arr_req)
+        return curv_3D.H_64(phi)
+
+#=== Gaussian curvature ========================================================
 def K(phi):
     """
         Only works for 3D arrays because for a 2D array, the 
@@ -51,19 +60,24 @@ def K(phi):
     import numpy as np
     from im3D.curvature import curv_2D
     from im3D.curvature import curv_3D
-    phi = np.require(phi, requirements=['C_CONTIGUOUS', 'ALIGNED'])
-    #
-    if phi.ndim == 3:
-        if phi.dtype == np.float32:
-            return curv_3D.K_32(phi)
-        elif phi.dtype == np.float64:
-            return curv_3D.K_64(phi)
-        else:
-            raise ValueError('Datatype must be 32 or 64 bit floats')
-    else:
-        print("Only 3D arrays supported")
-        return None
-# ==============================================================
+    #=== check the number of dimensions ===
+    ndim = phi.ndim
+    if ndim not in [3,]:
+        raise ValueError("Only 3D arrays supported for the Gaussian curvature")
+    #=== check the datatype ===
+    dtype = phi.dtype
+    if dtype not in [np.float32, np.float64]:
+        raise ValueError('Datatype must be 32 or 64 bit floats')
+    #=== calculate the curvature ===
+    arr_req = ['C_CONTIGUOUS', 'ALIGNED']
+    if (ndim == 3) and (dtype == np.float32):
+        phi = np.require(phi, dtype=np.float32, requirements=arr_req)
+        return curv_3D.K_32(phi)
+    elif (ndim == 3) and (dtype == np.float64):
+        phi = np.require(phi, dtype=np.float64, requirements=arr_req)
+        return curv_3D.K_64(phi)
+
+#=== First (smaller) principal curvature =======================================
 def k1(phi):
     """
     Principal curvature
@@ -73,7 +87,7 @@ def k1(phi):
         Calculates one of the principal curvatures a 3D signed 
         distance function:
         
-        K1 = H - sqrt(H^2-K)
+        k1 = H - sqrt(H^2-K)
         
     INPUTS
     ======
@@ -90,19 +104,24 @@ def k1(phi):
     import numpy as np
     from im3D.curvature import curv_2D
     from im3D.curvature import curv_3D
-    phi = np.require(phi, requirements=['C_CONTIGUOUS', 'ALIGNED'])
-    #
-    if phi.ndim == 3:
-        if phi.dtype == np.float32:
-            return curv_3D.k1_32(phi)
-        elif phi.dtype == np.float64:
-            return curv_3D.k1_64(phi)
-        else:
-            raise ValueError('Datatype must be 32 or 64 bit floats')
-    else:
-        print("Only 3D arrays supported")
-        return None
-# ==============================================================
+    #=== check the number of dimensions ===
+    ndim = phi.ndim
+    if ndim not in [3,]:
+        raise ValueError("Only 3D arrays supported for the principal curvatures")
+    #=== check the datatype ===
+    dtype = phi.dtype
+    if dtype not in [np.float32, np.float64]:
+        raise ValueError('Datatype must be 32 or 64 bit floats')
+    #=== calculate the curvature ===
+    arr_req = ['C_CONTIGUOUS', 'ALIGNED']
+    if (ndim == 3) and (dtype == np.float32):
+        phi = np.require(phi, dtype=np.float32, requirements=arr_req)
+        return curv_3D.k1_32(phi)
+    elif (ndim == 3) and (dtype == np.float64):
+        phi = np.require(phi, dtype=np.float64, requirements=arr_req)
+        return curv_3D.k1_64(phi)
+
+#=== Second (larger) principal curvature =======================================
 def k2(phi):
     """
     Principal curvature
@@ -129,16 +148,20 @@ def k2(phi):
     import numpy as np
     from im3D.curvature import curv_2D
     from im3D.curvature import curv_3D
-    phi = np.require(phi, requirements=['C_CONTIGUOUS', 'ALIGNED'])
-    #
-    if phi.ndim == 3:
-        if phi.dtype == np.float32:
-            return curv_3D.k2_32(phi)
-        elif phi.dtype == np.float64:
-            return curv_3D.k2_64(phi)
-        else:
-            raise ValueError('Datatype must be 32 or 64 bit floats')
-    else:
-        print("Only 3D arrays supported")
-        return None
-# ==============================================================
+    #=== check the number of dimensions ===
+    ndim = phi.ndim
+    if ndim not in [3,]:
+        raise ValueError("Only 3D arrays supported for the principal curvatures")
+    #=== check the datatype ===
+    dtype = phi.dtype
+    if dtype not in [np.float32, np.float64]:
+        raise ValueError('Datatype must be 32 or 64 bit floats')
+    #=== calculate the curvature ===
+    arr_req = ['C_CONTIGUOUS', 'ALIGNED']
+    if (ndim == 3) and (dtype == np.float32):
+        phi = np.require(phi, dtype=np.float32, requirements=arr_req)
+        return curv_3D.k2_32(phi)
+    elif (ndim == 3) and (dtype == np.float64):
+        phi = np.require(phi, dtype=np.float64, requirements=arr_req)
+        return curv_3D.k2_64(phi)
+
