@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-def ds(arr, it=5, dt=0.45, D=None):
+def ds(arr, it=10, dt=0.25, D=None):
     """
     Diffusion smoothing
     
@@ -8,9 +8,9 @@ def ds(arr, it=5, dt=0.45, D=None):
     ======
       arr --> 1D, 2D, 3D or 4D numpy array
               Array that is to be smoothed
-      it ---> integer, optional (default=5)
+      it ---> integer, optional (default=10)
               number of iterations to do
-      dt ---> float, optional (default=0.45)
+      dt ---> float, optional (default=0.25)
               size of timestep
       D ----> numpy array with an entry for each axis in arr
               Diffusivity along each of the axes.  Default is 
