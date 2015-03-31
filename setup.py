@@ -33,7 +33,8 @@ def makeExtension(extName):
         library_dirs = [site.PREFIXES[0]+'/lib'],
         extra_compile_args = ["-O3", "-fopenmp", "-Wno-maybe-uninitialized"],
         extra_link_args = ["-fopenmp"],
-        libraries = ['python2.7'],
+        # libraries = ['/Users/yue/anaconda/lib/libpython2.7.dylib'],
+        # libraries = ['python2.7'],
         )
 
 # ==============================================================

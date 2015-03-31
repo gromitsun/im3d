@@ -7,8 +7,8 @@ def reinit(double[:,::1] phi_0, double dt, int max_it, double band, int verbose)
     cdef double[:,::1] phi, phi_t
     cdef ssize_t  x, nx=phi_0.shape[0]
     cdef ssize_t  y, ny=phi_0.shape[1]
-    cdef ssize_t  xmin=1, xmax=nx-2  # Bounds of the 'good' data
-    cdef ssize_t  ymin=1, ymax=ny-2  # Bounds of the 'good' data
+    cdef ssize_t  xmin=3, xmax=nx-4  # Bounds of the 'good' data
+    cdef ssize_t  ymin=3, ymax=ny-4  # Bounds of the 'good' data
     cdef double  gX, gXm, gXp, gY, gYm, gYp, G
     cdef double  V1, V2, V3, V4, V5
     cdef double  sgn, dist
