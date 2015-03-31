@@ -40,23 +40,23 @@ def ds(arr, it=10, dt=0.25, D=None):
     #=== Check inputs ==========================================================
     dtype = arr.dtype
     ndims = arr.ndim
-    
+
     if dtype == np.float64:
         asfloat = np.float64
     else:
         asfloat = np.float32
         dtype = np.float32
-    
+
     if ndims not in [1, 2, 3, 4]:
         raise ValueError("Array must be 1, 2, 3 or 4 dimensions")
-    
+
     if D == None:
         D = np.ones((arr.ndim), dtype=dtype)
     else:
         D = np.array(D, dtype=dtype)
-    
+
     D = D / np.sum(D)
-    
+
     if arr.ndim != D.size:
         raise ValueError("D must have exactly one value for each axis in arr")
     #
@@ -79,7 +79,7 @@ def ds(arr, it=10, dt=0.25, D=None):
         Dx,Dy,Dz, = D[...]
     else:
         D0,D1,D2,D3, = D[...]
-    
+
     if (ndims == 1) and (dtype == np.float32):
         result = DS_1D_f32.isotropic(arr, it, dt, Dx)
     elif (ndims == 1) and (dtype == np.float64):
@@ -94,15 +94,16 @@ def ds(arr, it=10, dt=0.25, D=None):
         result = DS_3D_f64.isotropic(arr, it, dt, Dx, Dy, Dz)
     else:
         result = np.asarray(DS_4D.isotropic(arr, it, dt, D0, D1, D2, D3, bc_type))
-    
+
     return result
 
 # ==============================================================
 def mmc(arr, it=25, dt=0.0025, scale=None):
+    import numpy as np  # added by Yue
     # ==========================================================
-    #                            1D      2D      3D      4D  
+    #                            1D      2D      3D      4D
     #                          ======  ======  ======  ======
-    from im3D.smoothing import        MMC_2D, MMC_3D         
+    from im3D.smoothing import        MMC_2D, MMC_3D
     # ==========================================================
     """
     Motion by mean curvature
