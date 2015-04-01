@@ -151,4 +151,67 @@ def mmc(arr, it=25, dt=0.0025, scale=None):
         print("Array must be 2 or 3 dimensions")
     #
 
+
+def anisodiff(arr, it=10, kappa=50, dt=0.1, D=None, option=2, out=None):  # Added by Yue
+    import numpy as np
+    from im3D.smoothing import anisodiff_2D_f64, anisodiff_3D_f64
+     #=== Check inputs ==========================================================
+    dtype = arr.dtype
+    ndims = arr.ndim
+
+    if dtype == np.float64:
+        asfloat = np.float64
+    else:
+        asfloat = np.float32
+        dtype = np.float32
+
+    if D == None:
+        D = np.ones((arr.ndim), dtype=dtype)
+    else:
+        D = np.array(D, dtype=dtype)
+
+    D /= np.sum(D)
+
+    if arr.ndim != D.size:
+        raise ValueError("D must have exactly one value for each axis in arr")
+
+    it  = int(it)
+    dt  = asfloat(dt)
+    arr = np.require(arr, dtype=dtype, requirements=['C_contiguous'])
+
+    if ndims == 1:
+        Dx, = D[...]
+    elif ndims == 2:
+        Dx,Dy, = D[...]
+    elif ndims == 3:
+        Dx,Dy,Dz, = D[...]
+    else:
+        D0,D1,D2,D3, = D[...]
+
+    if out is None:
+        out = np.empty_like(arr, dtype=dtype)
+        ret = True
+    else:
+        ret = False
+
+
+    if (ndims == 1) and (dtype == np.float32):
+        pass
+    elif (ndims == 1) and (dtype == np.float64):
+        pass
+    elif (ndims == 2) and (dtype == np.float32):
+        pass
+    elif (ndims == 2) and (dtype == np.float64):
+        anisodiff_2D_f64.anisodiff(arr, it, kappa, dt, Dx, Dy, option, out)
+    elif (ndims == 3) and (dtype == np.float32):
+        pass
+    elif (ndims == 3) and (dtype == np.float64):
+        anisodiff_3D_f64.anisodiff(arr, it, kappa, dt, Dx, Dy, Dz, option, out)
+    else:
+        pass
+
+    if ret:
+        return out
+
+
 del absolute_import
