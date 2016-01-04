@@ -2,8 +2,8 @@ import numpy as np
 from cython.parallel cimport prange
 from math_functions cimport sqrtf, fabsf, f_max, f_min, f_sign
 #=== 32-bit floats, WENO method reinitialization ===============================
-cpdef void reinit(float[:,:,::1] phi_0, float[:,:,::1] phi,
-                  float dt=0.4, int max_it=25, float band=3.0, int verbose=0):
+cpdef void reinit(float[:,:,::1] phi_0, float[:,:,::1] phi, float dt=0.4,
+                  float tol=1e-6, float band=3.0, int max_it=25, int verbose=0):
     #--- Define variables ------------------------------------------------------
     cdef float[:,:,::1] phi_t
     cdef ssize_t  x, nx=phi_0.shape[0]
@@ -15,8 +15,8 @@ cpdef void reinit(float[:,:,::1] phi_0, float[:,:,::1] phi,
     cdef float  gX, gXm, gXp, gY, gYm, gYp, gZ, gZm, gZp, G
     cdef float  V1, V2, V3, V4, V5
     cdef float  sgn, dist
-    cdef float  max_phi, max_err
-    cdef int  i, iter=0, num=1
+    cdef float  max_phi, max_err, mean_err
+    cdef int  i, iter=0, num=0
     #--- Initialize arrays -----------------------------------------------------
     phi_t = np.empty(shape=(nx,ny,nz), dtype=np.float32)
     #
@@ -24,7 +24,7 @@ cpdef void reinit(float[:,:,::1] phi_0, float[:,:,::1] phi,
         phi[...] = phi_0[...]
     #--- Do the reinitialization -----------------------------------------------
     iter = 0
-    while iter < max_it:
+    while iter < max_it and mean_err > tol:
         with nogil:
             iter += 1
             for x in prange(xmin, xmax+1):
@@ -138,6 +138,8 @@ cpdef void reinit(float[:,:,::1] phi_0, float[:,:,::1] phi,
             #--- apply BCs and print current status ----------------------------
             max_phi = 0.0
             max_err = 0.0
+            mean_err = 0.0
+            num = 0
             BCs_const_first_deriv(phi)
             for x in range(xmin, xmax+1):
                 for y in range(ymin, ymax+1):
@@ -145,14 +147,17 @@ cpdef void reinit(float[:,:,::1] phi_0, float[:,:,::1] phi,
                         max_phi = f_max(fabsf(phi[x,y,z]), max_phi)
                         if fabsf(phi[x,y,z]) <= band:
                             max_err = f_max(fabsf(phi_t[x,y,z]), max_err)
+                            mean_err += fabsf(phi_t[x,y,z])
+                            num += 1
                         # end if statement
                     # end z for loop
                 # end y for loop
             # end x for loop
+            mean_err /= num
         # end nogil
         if verbose:
-            fmts = " | {:5d} | {:10d} | {:10.3f} | {:10.3f} | "
-            print(fmts.format(iter, num, max_err, max_phi))
+            fmts = " | {:5d} | {:10d} | {:10.3f} | {:10.3f} | {:10.3f} | "
+            print(fmts.format(iter, num, mean_err, max_err, max_phi))
     # end while loop
 
 

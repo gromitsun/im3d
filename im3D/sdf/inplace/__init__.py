@@ -73,37 +73,37 @@ def reinit(arr, out=None, dt=0.40, niter=25, subcell=True, WENO=True, verbose=0,
         ret = False
     
     if (ndim == 2) and f32 and WENO and subcell:
-        subcell_2D_WENO_float32.reinit(arr, out, dt, niter, band, verbose)
+        subcell_2D_WENO_float32.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 2) and f32 and WENO and regular:
-        reinit_2D_WENO_float32.reinit(arr, out, dt, niter, band, verbose)
+        reinit_2D_WENO_float32.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 2) and f32 and UW and subcell:
-        subcell_2D_UW_float32.reinit(arr, out, dt, niter, band, verbose)
+        subcell_2D_UW_float32.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 2) and f32 and UW and regular:
-        reinit_2D_UW_float32.reinit(arr, out, dt, niter, band, verbose)
+        reinit_2D_UW_float32.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 2) and f64 and WENO and subcell:
-        subcell_2D_WENO_float64.reinit(arr, out, dt, niter, band, verbose)
+        subcell_2D_WENO_float64.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 2) and f64 and WENO and regular:
-        reinit_2D_WENO_float64.reinit(arr, out, dt, niter, band, verbose)
+        reinit_2D_WENO_float64.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 2) and f64 and UW and subcell:
-        subcell_2D_UW_float64.reinit(arr, out, dt, niter, band, verbose)
+        subcell_2D_UW_float64.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 2) and f64 and UW and regular:
-        reinit_2D_UW_float64.reinit(arr, out, dt, niter, band, verbose)
+        reinit_2D_UW_float64.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 3) and f32 and WENO and subcell:
-        subcell_3D_WENO_float32.reinit(arr, out, dt, niter, band, verbose)
+        subcell_3D_WENO_float32.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 3) and f32 and WENO and regular:
-        reinit_3D_WENO_float32.reinit(arr, out, dt, niter, band, verbose)
+        reinit_3D_WENO_float32.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 3) and f32 and UW and subcell:
-        subcell_3D_UW_float32.reinit(arr, out, dt, niter, band, verbose)
+        subcell_3D_UW_float32.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 3) and f32 and UW and regular:
-        reinit_3D_UW_float32.reinit(arr, out, dt, niter, band, verbose)
+        reinit_3D_UW_float32.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 3) and f64 and WENO and subcell:
-        subcell_3D_WENO_float64.reinit(arr, out, dt, niter, band, verbose)
+        subcell_3D_WENO_float64.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 3) and f64 and WENO and regular:
-        reinit_3D_WENO_float64.reinit(arr, out, dt, niter, band, verbose)
+        reinit_3D_WENO_float64.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 3) and f64 and UW and subcell:
-        subcell_3D_UW_float64.reinit(arr, out, dt, niter, band, verbose)
+        subcell_3D_UW_float64.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
     elif (ndim == 3) and f64 and UW and regular:
-        reinit_3D_UW_float64.reinit(arr, out, dt, niter, band, verbose)
+        reinit_3D_UW_float64.reinit(arr, out, dt=dt, tol=tol, max_it=niter, band=band, verbose=verbose)
 
     if ret:
         return out
